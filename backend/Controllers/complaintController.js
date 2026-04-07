@@ -55,7 +55,7 @@ export const createComplaint = async (req, res) => {
       description,
       category,
       user: req.user._id,
-      image: req.file ? req.file.filename : null,
+      image: req.file ? req.file.originalname : null,
       status: "Pending",
       priority,
     });
