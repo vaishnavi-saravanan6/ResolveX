@@ -4,7 +4,8 @@ import { useNavigate, Link } from "react-router-dom";
 import { toast } from "react-toastify";
 import { useTheme } from "../context/ThemeContext";
 
-const API = "http://localhost:5000/api";
+const API_BASE_URI = (import.meta.env.VITE_API_BASE_URI || "http://localhost:5000").replace(/\/$/, "");
+const API = `${API_BASE_URI}/api`;
 
 function Register() {
   const [name, setName] = useState("");

@@ -13,7 +13,9 @@ import { AppChrome } from "../components/AppChrome";
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
-const API = "http://localhost:5000/api";
+const API_BASE_URI = (import.meta.env.VITE_API_BASE_URI || "http://localhost:5000").replace(/\/$/, "");
+const API = `${API_BASE_URI}/api`;
+const UPLOADS_BASE = `${API_BASE_URI}/uploads`;
 
 function daysSince(dateStr) {
   if (!dateStr) return 0;
@@ -278,7 +280,7 @@ function AdminDashboard() {
                   {comp.image && (
                     <img
                       className="complaint-img"
-                      src={`http://localhost:5000/uploads/${comp.image}`}
+                      src={`${UPLOADS_BASE}/${comp.image}`}
                       alt=""
                     />
                   )}

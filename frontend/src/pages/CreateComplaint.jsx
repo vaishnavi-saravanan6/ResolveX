@@ -5,7 +5,8 @@ import { toast } from "react-toastify";
 import { AppChrome } from "../components/AppChrome";
 import { matchedHighKeywords, predictPriority } from "../utils/priorityPreview";
 
-const API = "http://localhost:5000/api";
+const API_BASE_URI = (import.meta.env.VITE_API_BASE_URI || "http://localhost:5000").replace(/\/$/, "");
+const API = `${API_BASE_URI}/api`;
 
 const CATEGORIES = [
   "Infrastructure",
