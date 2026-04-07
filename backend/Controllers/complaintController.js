@@ -1,5 +1,6 @@
 import crypto from "crypto";
 import Complaint from "../Models/Complaint.js";
+import connectDB from "../config/db.js";
 
 async function generateUniqueReferenceCode() {
   const year = new Date().getFullYear();
@@ -15,6 +16,7 @@ async function generateUniqueReferenceCode() {
 // ✅ Create Complaint (With Smart Priority)
 export const createComplaint = async (req, res) => {
   try {
+    await connectDB();
     const { title, description, category } = req.body;
 
     // 🔥 SMART PRIORITY LOGIC
@@ -69,6 +71,7 @@ export const createComplaint = async (req, res) => {
 // ✅ Get My Complaints (User)
 export const getMyComplaints = async (req, res) => {
   try {
+    await connectDB();
     const complaints = await Complaint.find({ user: req.user._id });
     res.json(complaints);
   } catch (error) {
@@ -79,6 +82,7 @@ export const getMyComplaints = async (req, res) => {
 // ✅ Get All Complaints (Admin) + AUTO ESCALATION
 export const getAllComplaints = async (req, res) => {
   try {
+    await connectDB();
     const complaints = await Complaint.find()
       .populate("user", "name email");
 
@@ -114,6 +118,7 @@ export const getAllComplaints = async (req, res) => {
 // ✅ Update Complaint Status (Admin)
 export const updateComplaintStatus = async (req, res) => {
   try {
+    await connectDB();
     const complaint = await Complaint.findById(req.params.id);
 
     if (!complaint) {
@@ -145,6 +150,7 @@ export const updateComplaintStatus = async (req, res) => {
 // ✅ Complaint Statistics (Enhanced Analytics)
 export const getComplaintStats = async (req, res) => {
   try {
+    await connectDB();
     const total = await Complaint.countDocuments();
     const inProgress = await Complaint.countDocuments({ status: "In Progress" });
     const resolved = await Complaint.countDocuments({ status: "Resolved" });
@@ -193,6 +199,7 @@ export const getComplaintStats = async (req, res) => {
 // ✅ Delete Complaint (User)
 export const deleteComplaint = async (req, res) => {
   try {
+    await connectDB();
     const complaint = await Complaint.findById(req.params.id);
 
     if (!complaint) {

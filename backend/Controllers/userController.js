@@ -1,6 +1,7 @@
 import User from "../Models/User.js";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
+import connectDB from "../config/db.js";
 
 // Generate JWT Token
 const generateToken = (id) => {
@@ -12,6 +13,7 @@ const generateToken = (id) => {
 // REGISTER USER
 export const registerUser = async (req, res) => {
   try {
+    await connectDB();
     const { name, email, password } = req.body;
 
     const userExists = await User.findOne({ email });
@@ -43,6 +45,7 @@ export const registerUser = async (req, res) => {
 // LOGIN USER
 export const loginUser = async (req, res) => {
   try {
+    await connectDB();
     const { email, password } = req.body;
 
     const user = await User.findOne({ email });

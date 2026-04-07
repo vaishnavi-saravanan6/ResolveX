@@ -1,10 +1,10 @@
 import express from "express";
-import mongoose from "mongoose";
 import cors from "cors";
 import dotenv from "dotenv";
 import userRoutes from "./Routes/userRoutes.js";
 import complaintRoutes from "./Routes/complaintRoutes.js";
 import path from "path";
+import connectDB from "./config/db.js";
 
 
 dotenv.config();
@@ -24,8 +24,8 @@ app.get("/", (req, res) => {
   res.send("ResolveX API Running...");
 });
 
-// MongoDB Connection
-mongoose.connect(process.env.MONGO_URI)
+// MongoDB Connection (cached for serverless)
+connectDB()
   .then(() => console.log("MongoDB Connected Successfully"))
   .catch((err) => console.log("MongoDB Error:", err));
 
